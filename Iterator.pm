@@ -13,7 +13,7 @@ our @EXPORT = qw(imap igrep);
 
 use Carp;
 
-our $VERSION = "0.2";
+our $VERSION = "0.3";
 
 sub new {
     my $proto = shift;
@@ -102,11 +102,11 @@ sub imap (&$) {
 
 
 sub _igrep {
-    my ($rule, $generator) = @_;
-    my $it = $generator->();
+    my ($rule, $it) = @_;
+#    my $it = $generator->();
     return sub {
 	return sub {
-	    while (defined(my $v = $it->())) {
+	    while ( defined(my $v = $it->()) ) {
 		local $_ = $v;
 		return $_ if $rule->();
 	    }
@@ -119,7 +119,7 @@ sub _igrep {
 
 sub igrep (&$) {
     my ($rule, $self) = @_;
-    return $self->new(_igrep($rule, $self->generator));
+    return $self->new(_igrep($rule, $self->iterator));
 }
 
 
@@ -148,7 +148,7 @@ Class::Iterator - Iterator class
   while (my $v = $it->next) { print "value : $v\n" }
 
   # use grep like
-  my $it3 = imap { ...some code with $_...} $it
+  my $it3 = igrep { ...some code with $_...} $it
   while (my $v = $it->next) { print "value : $v\n" }
 
 
@@ -191,6 +191,7 @@ iterator in the manner of grep.
 =head1 CREDITS
 
 Marc Jason Dominius's YAPC::EU 2003 classes.
+Ken Olstad 
 
 =head1 AUTHOR
 
