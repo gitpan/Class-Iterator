@@ -1,12 +1,19 @@
 package Class::Iterator;
 
+
+# Copyright (c) 2003 Robert Silve
+# All rights reserved.
+# This program is free software; you can redistribute it and/or modify it
+# under the same terms as Perl itself. 
+
+
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = qw(imap igrep);
 
 use Carp;
 
-our $VERSION = "0.1";
+our $VERSION = "0.2";
 
 sub new {
     my $proto = shift;
@@ -27,6 +34,28 @@ sub init {
 sub next {
     my $self = shift;
     return $self->iterator->();
+}
+
+sub generator {
+    my $self = shift;
+    my $arg = shift;
+    if ($arg) {
+	$self->{_generator} = $arg;
+    } else {
+	return $self->{_generator};
+    }
+
+}
+
+sub iterator {
+    my $self = shift;
+    my $arg = shift;
+    if ($arg) {
+	$self->{_iterator} = $arg;
+    } else {
+	return $self->{_iterator};
+    }
+
 }
 
 sub AUTOLOAD {
@@ -159,7 +188,9 @@ iterator in the manner of grep.
 
 =back
 
+=head1 CREDITS
 
+Marc Jason Dominius's YAPC::EU 2003 classes.
 
 =head1 AUTHOR
 

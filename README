@@ -35,6 +35,9 @@ DESCRIPTION
         This a creator. It create a new iterator from an existant iterator
         in the manner of grep.
 
+CREDITS
+    Marc Jason Dominius's YAPC::EU 2003 classes.
+
 AUTHOR
     Robert Silve <robert@silve.net>
 

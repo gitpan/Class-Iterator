@@ -21,3 +21,4 @@ while (defined(my $n = $it2->next)) {
 # test the imap routine
 my $it3 = igrep { $_ >= 99 } $it;
 ok ($it3->next == 99);
+my $s = sub { $_ >= 99 };
